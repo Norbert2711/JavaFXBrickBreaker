@@ -1,7 +1,10 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
@@ -35,6 +38,7 @@ public class Main extends Application {
         stage.setTitle("Break Breaker");
         createBackground();
         addLogo();
+        createCursor();
         gameButtonsList = new ArrayList<>();
         stage.show();
         addAllButtons();
@@ -63,10 +67,15 @@ public class Main extends Application {
     private void addLogo() {
 
         ImageView logo = new ImageView("/sample/resources/logoBrick.png");
-        logo.setLayoutY(50);
-        logo.setLayoutY(50);
+        logo.setLayoutY(370);
+        logo.setLayoutX(90);
         mainPane.getChildren().add(logo);
 
+    }
+
+    private void createCursor() {
+        Image cursor = new Image("sample/resources/cursorBall.png");
+        mainPane.setCursor(new ImageCursor(cursor));
     }
 
     private void addStartButton() {
@@ -75,6 +84,7 @@ public class Main extends Application {
         gameButtonStart.setLayoutY(300);
         gameButtonStart.setOnMouseEntered(mouseEvent -> gameButtonStart.setEffect(new SepiaTone()));
         gameButtonStart.setOnMouseExited(mouseEvent -> gameButtonStart.setEffect(null));
+        gameButtonStart.setOnMouseClicked(mouseEvent -> gameButtonStart.setEffect(new Bloom()));
         mainPane.getChildren().add(gameButtonStart);
 
     }
@@ -86,6 +96,7 @@ public class Main extends Application {
         gameHelpButton.setLayoutY(300);
         gameHelpButton.setOnMouseEntered(mouseEvent -> gameHelpButton.setEffect(new SepiaTone()));
         gameHelpButton.setOnMouseExited(mouseEvent -> gameHelpButton.setEffect(null));
+        gameHelpButton.setOnMouseClicked(mouseEvent -> gameHelpButton.setEffect(new Bloom()));
         mainPane.getChildren().add(gameHelpButton);
     }
 
@@ -96,8 +107,8 @@ public class Main extends Application {
         gameExitButton.setLayoutY(355);
         gameExitButton.setOnMouseEntered(mouseEvent -> gameExitButton.setEffect(new SepiaTone()));
         gameExitButton.setOnMouseExited(mouseEvent -> gameExitButton.setEffect(null));
-        gameExitButton.setOnMouseClicked(mouseEvent ->
-                stage.close());
+        gameExitButton.setOnMouseClicked(mouseEvent -> gameExitButton.setEffect(new Bloom()));
+        gameExitButton.setOnMouseClicked(mouseEvent -> stage.close());
         mainPane.getChildren().add(gameExitButton);
     }
 
