@@ -3,17 +3,12 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.effect.Blend;
 import javafx.scene.effect.Bloom;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Main extends Application {
@@ -26,8 +21,8 @@ public class Main extends Application {
     private static final String FONT = "sample/resources/kenvector_future.ttf";
     private GameSubscene startSubscene;
     private GameSubscene helpSubscene;
-    private GameSubscene exitSubscene;
-    private List<GameButtons> gameButtonsList;
+    private GameSubscene plaftormChoser;
+    private GameSubscene sceneToHide;
 
     public Main() {
 
@@ -39,9 +34,9 @@ public class Main extends Application {
         createBackground();
         addLogo();
         createCursor();
-        gameButtonsList = new ArrayList<>();
         stage.show();
         addAllButtons();
+        createSubscene();
     }
 
     @Override
@@ -67,8 +62,9 @@ public class Main extends Application {
     private void addLogo() {
 
         ImageView logo = new ImageView("/sample/resources/logoBrick.png");
-        logo.setLayoutY(370);
+        logo.setLayoutY(378);
         logo.setLayoutX(90);
+        logo.setRotate(-15);
         mainPane.getChildren().add(logo);
 
     }
@@ -97,7 +93,36 @@ public class Main extends Application {
         gameHelpButton.setOnMouseEntered(mouseEvent -> gameHelpButton.setEffect(new SepiaTone()));
         gameHelpButton.setOnMouseExited(mouseEvent -> gameHelpButton.setEffect(null));
         gameHelpButton.setOnMouseClicked(mouseEvent -> gameHelpButton.setEffect(new Bloom()));
+        gameHelpButton.setOnMouseClicked(mouseEvent -> showSubscene(helpSubscene));
         mainPane.getChildren().add(gameHelpButton);
+    }
+
+    private void createHelpScene() {
+
+        helpSubscene = new GameSubscene();
+        mainPane.getChildren().add(helpSubscene);
+        TextLabel helpLabel = new TextLabel("Control is simple!" + "\n" + " Use arrow keys" + "\n" + " <--- LEFT" + "\n" +
+                " and " + "\n" + " RIGHT ---> " + "\n" + "on your keyboard");
+        helpLabel.setLayoutX(110);
+        helpLabel.setLayoutY(25);
+
+        String CONTROL_EFFECT = "sample/resources/arrows.gif";
+        ImageView arrows = new ImageView(CONTROL_EFFECT);
+        arrows.setLayoutX(350);
+        arrows.setLayoutY(250);
+
+        helpSubscene.getPane().getChildren().add(arrows);
+        helpSubscene.getPane().getChildren().add(helpLabel);
+
+    }
+
+    private void createChosePlatformScene(){
+
+        plaftormChoser = new GameSubscene();
+        mainPane.getChildren().add(plaftormChoser);
+        InfoLabel
+
+
     }
 
     private void addExitButton() {
@@ -115,9 +140,27 @@ public class Main extends Application {
 
     private void createSubscene() {
 
+        helpSubscene = new GameSubscene();
+        mainPane.getChildren().add(helpSubscene);
+        createHelpScene();
 
+        startSubscene = new GameSubscene();
+        mainPane.getChildren().add(startSubscene);
+
+        createChosePlatformScene();
     }
 
+    private void showSubscene(GameSubscene subscene) {
+
+        if (sceneToHide != null) {
+            sceneToHide.moveSubscene();
+
+        }
+
+        subscene.moveSubscene();
+        sceneToHide = subscene;
+
+    }
 
     public static void main(String[] args) {
         launch(args);
