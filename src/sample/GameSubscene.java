@@ -39,7 +39,7 @@ public class GameSubscene extends SubScene {
 
         } else {
             translateTransition.setToY(0);
-            isHidden = true;
+            isHidden = false;
 
         }
 

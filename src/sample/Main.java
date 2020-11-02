@@ -8,6 +8,7 @@ import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
@@ -23,6 +24,7 @@ public class Main extends Application {
     private GameSubscene helpSubscene;
     private GameSubscene plaftormChoser;
     private GameSubscene sceneToHide;
+    private MediaPlayer mediaPlayer;
 
     public Main() {
 
@@ -37,11 +39,12 @@ public class Main extends Application {
         stage.show();
         addAllButtons();
         createSubscene();
+
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        //music();
     }
 
     private void createBackground() {
@@ -81,6 +84,12 @@ public class Main extends Application {
         gameButtonStart.setOnMouseEntered(mouseEvent -> gameButtonStart.setEffect(new SepiaTone()));
         gameButtonStart.setOnMouseExited(mouseEvent -> gameButtonStart.setEffect(null));
         gameButtonStart.setOnMouseClicked(mouseEvent -> gameButtonStart.setEffect(new Bloom()));
+
+        gameButtonStart.setOnAction(actionEvent -> {
+            Gameplay gameplay = new Gameplay();
+            gameplay.createNewGameAfterClickPlay(stage);
+        });
+
         mainPane.getChildren().add(gameButtonStart);
 
     }
@@ -116,14 +125,6 @@ public class Main extends Application {
 
     }
 
-    private void createChosePlatformScene(){
-
-        plaftormChoser = new GameSubscene();
-        mainPane.getChildren().add(plaftormChoser);
-        InfoLabel
-
-
-    }
 
     private void addExitButton() {
         GameButtons gameExitButton = new GameButtons("EXIT");
@@ -147,7 +148,7 @@ public class Main extends Application {
         startSubscene = new GameSubscene();
         mainPane.getChildren().add(startSubscene);
 
-        createChosePlatformScene();
+
     }
 
     private void showSubscene(GameSubscene subscene) {
@@ -161,6 +162,15 @@ public class Main extends Application {
         sceneToHide = subscene;
 
     }
+
+//    public void music() {
+//
+//        String music = "music.mp3";
+//        Media media = new Media(Paths.get(music).toUri().toString());
+//        mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.play();
+//
+//    }
 
     public static void main(String[] args) {
         launch(args);

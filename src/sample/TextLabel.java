@@ -8,8 +8,8 @@ public class TextLabel extends Label {
 
     public TextLabel(String text) {
 
-        setWidth(280);
-        setPrefHeight(200);
+        setWidth(180);
+        setPrefHeight(270);
         setAlignment(Pos.BOTTOM_LEFT);
         setWrapText(true);
         setText(text);
