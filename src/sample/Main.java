@@ -20,9 +20,7 @@ public class Main extends Application {
     private Stage stage;
     private static final String BACKGROUND = "sample/resources/brickBackground.png";
     private static final String FONT = "sample/resources/kenvector_future.ttf";
-    private GameSubscene startSubscene;
     private GameSubscene helpSubscene;
-    private GameSubscene plaftormChoser;
     private GameSubscene sceneToHide;
     private MediaPlayer mediaPlayer;
 
@@ -145,7 +143,7 @@ public class Main extends Application {
         mainPane.getChildren().add(helpSubscene);
         createHelpScene();
 
-        startSubscene = new GameSubscene();
+        GameSubscene startSubscene = new GameSubscene();
         mainPane.getChildren().add(startSubscene);
 
 
@@ -162,6 +160,7 @@ public class Main extends Application {
         sceneToHide = subscene;
 
     }
+
 
 //    public void music() {
 //
