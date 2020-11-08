@@ -1,14 +1,11 @@
-package sample;
+package BrickBreaker;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -64,6 +61,10 @@ public class Gameplay {
     private Rectangle red3;
     private Rectangle red4;
     private Rectangle red5;
+    Random randomPoss = new Random();
+    private boolean gameOver;
+
+    ArrayList<Rectangle> rectangleArrayList = new ArrayList<>();
 
     public Gameplay() {
 
@@ -88,13 +89,14 @@ public class Gameplay {
         createAnimations();
         showBlueBricksInGame();
 
+
     }
 
     public void showPlatformOnPane() {
 
         platform = new Rectangle(100, 20);
         platform.relocate(platform.getX() + 200, platform.getY() + 650);
-        Image platformImage = new Image("sample/resources/paddleRed.png");
+        Image platformImage = new Image("BrickBreaker/resources/paddleRed.png");
         platform.setFill(new ImagePattern(platformImage));
         gamePane.getChildren().add(platform);
 
@@ -102,19 +104,18 @@ public class Gameplay {
 
     public void showBallInGameAndMove() {
         ball = new Rectangle(20, 20);
-        Image ballImage = new Image("sample/resources/ballGrey.png");
+        Image ballImage = new Image("BrickBreaker/resources/ballGrey.png");
         ball.setFill(new ImagePattern(ballImage));
 
         ball.setY(ball.getY());
         ball.relocate(ball.getX(), 600);
         gamePane.getChildren().add(ball);
-        boolean gameStarted = true;
         System.out.println("start");
     }
 
     public void createGameBackground() {
 
-        Image background = new Image("sample/resources/background.png", 600, 700, false, true);
+        Image background = new Image("BrickBreaker/resources/background.png", 600, 700, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT, null);
         gamePane.setBackground(new Background(backgroundImage));
@@ -158,6 +159,7 @@ public class Gameplay {
                 //showBallInGameAndMove();
                 createBallMove();
                 removeBrick();
+
             }
         };
 
@@ -188,7 +190,8 @@ public class Gameplay {
     public void createBallMove() {
 
         if (platform.getBoundsInParent().intersects(ball.getBoundsInParent())) {
-            ballYdir = -ballYdir;
+
+            ballYdir =- ballYdir - randomPoss.nextInt(3);
 
         }
 
@@ -218,9 +221,7 @@ public class Gameplay {
 
     private void showBlueBricksInGame() {
 
-        ArrayList<Rectangle> rectangleArrayList = new ArrayList<>();
-
-        String brickBlue = "sample/resources/element_blue_rectangle_glossy.png";
+        String brickBlue = "BrickBreaker/resources/element_blue_rectangle_glossy.png";
         Image blueBrick = new Image(brickBlue);
 
         blue1 = new Rectangle(80, 40);
@@ -258,7 +259,7 @@ public class Gameplay {
 
         gamePane.getChildren().add(blue5);
 
-        String brickGrey = "sample/resources/element_grey_rectangle_glossy.png";
+        String brickGrey = "BrickBreaker/resources/element_grey_rectangle_glossy.png";
         Image greyBrick = new Image(brickGrey);
 
         grey1 = new Rectangle(80, 40);
@@ -296,7 +297,7 @@ public class Gameplay {
 
         gamePane.getChildren().add(grey5);
 
-        String brickPurple = "sample/resources/element_purple_rectangle_glossy.png";
+        String brickPurple = "BrickBreaker/resources/element_purple_rectangle_glossy.png";
         Image purpleBrick = new Image(brickPurple);
 
         purple1 = new Rectangle(80, 40);
@@ -322,19 +323,19 @@ public class Gameplay {
 
         purple4 = new Rectangle(80, 40);
         purple4.setFill(new ImagePattern(purpleBrick));
-        purple4.setX(purple4.getX() + 320);
+        purple4.setX(purple4.getX() + 340);
         purple4.setY(purple4.getY() + 110);
 
         gamePane.getChildren().add(purple4);
 
         purple5 = new Rectangle(80, 40);
         purple5.setFill(new ImagePattern(purpleBrick));
-        purple5.setX(purple5.getX() + 400);
+        purple5.setX(purple5.getX() + 420);
         purple5.setY(purple5.getY() + 110);
 
         gamePane.getChildren().add(purple5);
 
-        String brickYellow = "sample/resources/element_red_rectangle_glossy.png";
+        String brickYellow = "BrickBreaker/resources/element_red_rectangle_glossy.png";
         Image yellowBrick = new Image(brickYellow);
 
         yellow1 = new Rectangle(80, 40);
@@ -372,7 +373,7 @@ public class Gameplay {
 
         gamePane.getChildren().add(yellow5);
 
-        String brickRed = "sample/resources/element_yellow_rectangle_glossy.png";
+        String brickRed = "BrickBreaker/resources/element_yellow_rectangle_glossy.png";
         Image redBrick = new Image(brickRed);
 
         red1 = new Rectangle(80, 40);
@@ -398,14 +399,14 @@ public class Gameplay {
 
         red4 = new Rectangle(80, 40);
         red4.setFill(new ImagePattern(redBrick));
-        red4.setX(red4.getX() + 320);
+        red4.setX(red4.getX() + 340);
         red4.setY(red4.getY() + 190);
 
         gamePane.getChildren().add(red4);
 
         red5 = new Rectangle(80, 40);
         red5.setFill(new ImagePattern(redBrick));
-        red5.setX(red5.getX() + 400);
+        red5.setX(red5.getX() + 420);
         red5.setY(red5.getY() + 190);
 
         gamePane.getChildren().add(red5);
@@ -414,208 +415,203 @@ public class Gameplay {
 
     private void removeBrick() {
 
-        //blue
-        boolean showBrick = true;
-        if (ball.getBoundsInParent().intersects(blue1.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(blue1);
-            blue1.relocate(1000, 1000);
+            //blue
+            if (ball.getBoundsInParent().intersects(blue1.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(blue1);
+                blue1.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(blue2.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(blue2);
-            blue2.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(blue2.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(blue2);
+                blue2.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(blue3.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(blue3);
-            blue3.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(blue3.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(blue3);
+                blue3.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(blue4.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(blue4);
-            blue4.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(blue4.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(blue4);
+                blue4.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(blue5.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(blue5);
-            blue5.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(blue5.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(blue5);
+                blue5.relocate(1000, 1000);
 
-        }
-        //grey
-        if (ball.getBoundsInParent().intersects(grey1.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(grey1);
-            grey1.relocate(1000, 1000);
+            }
+            //grey
+            if (ball.getBoundsInParent().intersects(grey1.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(grey1);
+                grey1.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(grey2.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(grey2);
-            grey2.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(grey2.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(grey2);
+                grey2.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(grey3.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(grey3);
-            grey3.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(grey3.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(grey3);
+                grey3.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(grey4.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(grey4);
-            grey4.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(grey4.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(grey4);
+                grey4.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(grey5.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(grey5);
-            grey5.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(grey5.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                gamePane.getChildren().remove(grey5);
+                grey5.relocate(1000, 1000);
 
-        }
+            }
 
-        //purple
-        if (ball.getBoundsInParent().intersects(purple1.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(purple1);
-            purple1.relocate(1000, 1000);
+            //purple
+            if (ball.getBoundsInParent().intersects(purple1.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                // gamePane.getChildren().remove(purple1);
+                purple1.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(purple2.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(purple2);
-            purple2.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(purple2.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(purple2);
+                purple2.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(purple3.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(purple3);
-            purple3.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(purple3.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(purple3);
+                purple3.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(purple4.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(purple4);
-            purple4.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(purple4.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(purple4);
+                purple4.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(purple5.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(purple5);
-            purple5.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(purple5.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(purple5);
+                purple5.relocate(1000, 1000);
 
-        }
-        //yellow
-        if (ball.getBoundsInParent().intersects(yellow1.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(yellow1);
-            yellow1.relocate(1000, 1000);
+            }
+            //yellow
+            if (ball.getBoundsInParent().intersects(yellow1.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(yellow1);
+                yellow1.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(yellow2.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(yellow2);
-            yellow2.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(yellow2.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                // gamePane.getChildren().remove(yellow2);
+                yellow2.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(yellow3.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(yellow3);
-            yellow3.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(yellow3.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(yellow3);
+                yellow3.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(yellow4.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(yellow4);
-            yellow4.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(yellow4.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //  gamePane.getChildren().remove(yellow4);
+                yellow4.relocate(1000, 1000);
 
-        }
+            }
 
-        if (ball.getBoundsInParent().intersects(yellow5.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(yellow5);
-            yellow5.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(yellow5.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(yellow5);
+                yellow5.relocate(1000, 1000);
 
-        }
+            }
 //        //red
-        if (ball.getBoundsInParent().intersects(red1.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(red1);
-            red1.relocate(1000, 1000);
+            if (ball.getBoundsInParent().intersects(red1.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                // gamePane.getChildren().remove(red1);
+                red1.relocate(1000, 1000);
+
+            }
+
+            if (ball.getBoundsInParent().intersects(red2.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                // gamePane.getChildren().remove(red2);
+                red2.relocate(1000, 1000);
+
+            }
+
+            if (ball.getBoundsInParent().intersects(red3.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(red3);
+                red3.relocate(1000, 1000);
+
+            }
+
+            if (ball.getBoundsInParent().intersects(red4.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(red4);
+                red4.relocate(1000, 1000);
+
+            }
+
+            if (ball.getBoundsInParent().intersects(red5.getBoundsInParent())) {
+                ballYdir = -ballYdir;
+                //gamePane.getChildren().remove(red5);
+                red5.relocate(1000, 1000);
 
         }
 
-        if (ball.getBoundsInParent().intersects(red2.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(red2);
-            red2.relocate(1000, 1000);
-
-        }
-
-        if (ball.getBoundsInParent().intersects(red3.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(red3);
-            red3.relocate(1000, 1000);
-
-        }
-
-        if (ball.getBoundsInParent().intersects(red4.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(red4);
-            red4.relocate(1000, 1000);
-
-        }
-
-        if (ball.getBoundsInParent().intersects(red5.getBoundsInParent())) {
-            showBrick = false;
-            ballYdir = -ballYdir;
-            gamePane.getChildren().remove(red5);
-            red5.relocate(1000, 1000);
-
-        }
     }
+
+    private void showGameOverAnim() {
+
+        EndGame endGame = new EndGame();
+        gamePane.getChildren().add(endGame);
+        addRestartButton();
+
+    }
+
+    private void addRestartButton() {
+
+        GameButtons restart = new GameButtons("RESTART");
+        restart.getEffect();
+        restart.setLayoutX(650);
+        restart.setLayoutY(650);
+        restart.setOnMouseClicked(mouseEvent -> gameStage.show());
+        gamePane.getChildren().add(restart);
+
+    }
+
 }
 

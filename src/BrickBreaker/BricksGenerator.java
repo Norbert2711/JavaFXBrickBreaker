@@ -1,4 +1,4 @@
-package sample;
+package BrickBreaker;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -33,12 +33,12 @@ public class BricksGenerator extends Rectangle {
 
         Random number = new Random(30);
 
-        Image brickBlue = new Image("sample/resources/element_blue_rectangle_glossy.png");
-        Image brickGreen = new Image("sample/resources/element_green_rectangle_glossy.png");
-        Image brickGrey = new Image("sample/resources/element_grey_rectangle_glossy.png");
-        Image brickPurple = new Image("sample/resources/element_purple_rectangle_glossy.png");
-        Image brickYellow = new Image("sample/resources/element_red_rectangle_glossy.png");
-        Image brickRed = new Image("sample/resources/element_yellow_rectangle_glossy.png");
+        Image brickBlue = new Image("BrickBreaker/resources/element_blue_rectangle_glossy.png");
+        Image brickGreen = new Image("BrickBreaker/resources/element_green_rectangle_glossy.png");
+        Image brickGrey = new Image("BrickBreaker/resources/element_grey_rectangle_glossy.png");
+        Image brickPurple = new Image("BrickBreaker/resources/element_purple_rectangle_glossy.png");
+        Image brickYellow = new Image("BrickBreaker/resources/element_red_rectangle_glossy.png");
+        Image brickRed = new Image("BrickBreaker/resources/element_yellow_rectangle_glossy.png");
 
 
         for (int i = 0; i < map.length; i++) {

@@ -1,8 +1,7 @@
-package sample;
+package BrickBreaker;
 
 
 import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.text.Font;
 
@@ -20,14 +19,14 @@ public class GameButtons extends Button {
 
     public void setButtonsFont() {
 
-        String FONT_PAHT = "/sample/resources/kenvector_future.ttf";
+        String FONT_PAHT = "/BrickBreaker/resources/kenvector_future.ttf";
         setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PAHT), 23));
     }
 
     private void setButtonStyleAfterPress() {
 
         DropShadow dropShadow = new DropShadow();
-        String BUTTON_STYLE = " -fx-background-color: transparent; -fx-background-image: url('/sample/resources/buttonSelected.png');";
+        String BUTTON_STYLE = " -fx-background-color: transparent; -fx-background-image: url('/BrickBreaker/resources/buttonSelected.png');";
         setStyle(BUTTON_STYLE);
         setPrefHeight(45);
         setLayoutY(getLayoutY() + 4);

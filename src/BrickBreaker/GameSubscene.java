@@ -1,4 +1,4 @@
-package sample;
+package BrickBreaker;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.SubScene;
@@ -14,7 +14,7 @@ public class GameSubscene extends SubScene {
 
         super(new AnchorPane(), 600, 400);
 
-        String SUBSCENE_IMAGE = "sample/resources/subscene.jpg";
+        String SUBSCENE_IMAGE = "BrickBreaker/resources/subscene.jpg";
         BackgroundImage backgroundImage = new BackgroundImage(new Image(SUBSCENE_IMAGE, 600, 400, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 

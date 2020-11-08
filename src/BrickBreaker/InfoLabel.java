@@ -1,4 +1,4 @@
-package sample;
+package BrickBreaker;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -19,7 +19,7 @@ public class InfoLabel extends Label {
     }
 
     private void setTextFont() {
-        String FONT_PATH = "sample/resources/kenvector_future.ttf";
+        String FONT_PATH = "BrickBreaker/resources/kenvector_future.ttf";
         setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 20));
 
     }

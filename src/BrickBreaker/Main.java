@@ -1,4 +1,4 @@
-package sample;
+package BrickBreaker;
 
 import javafx.application.Application;
 import javafx.scene.ImageCursor;
@@ -18,10 +18,11 @@ public class Main extends Application {
     private static final int WIDTH = 600;
     private AnchorPane mainPane;
     private Stage stage;
-    private static final String BACKGROUND = "sample/resources/brickBackground.png";
-    private static final String FONT = "sample/resources/kenvector_future.ttf";
+    private static final String BACKGROUND = "BrickBreaker/resources/brickBackground.png";
+    private static final String FONT = "BrickBreaker/resources/kenvector_future.ttf";
     private GameSubscene helpSubscene;
     private GameSubscene sceneToHide;
+    private EndGame gameOver;
     private MediaPlayer mediaPlayer;
 
     public Main() {
@@ -62,7 +63,7 @@ public class Main extends Application {
 
     private void addLogo() {
 
-        ImageView logo = new ImageView("/sample/resources/logoBrick.png");
+        ImageView logo = new ImageView("/BrickBreaker/resources/logoBrick.png");
         logo.setLayoutY(378);
         logo.setLayoutX(90);
         logo.setRotate(-15);
@@ -71,7 +72,7 @@ public class Main extends Application {
     }
 
     private void createCursor() {
-        Image cursor = new Image("sample/resources/cursorBall.png");
+        Image cursor = new Image("BrickBreaker/resources/cursorBall.png");
         mainPane.setCursor(new ImageCursor(cursor));
     }
 
@@ -113,7 +114,7 @@ public class Main extends Application {
         helpLabel.setLayoutX(110);
         helpLabel.setLayoutY(25);
 
-        String CONTROL_EFFECT = "sample/resources/arrows.gif";
+        String CONTROL_EFFECT = "BrickBreaker/resources/arrows.gif";
         ImageView arrows = new ImageView(CONTROL_EFFECT);
         arrows.setLayoutX(350);
         arrows.setLayoutY(250);
@@ -122,7 +123,6 @@ public class Main extends Application {
         helpSubscene.getPane().getChildren().add(helpLabel);
 
     }
-
 
     private void addExitButton() {
         GameButtons gameExitButton = new GameButtons("EXIT");
@@ -146,6 +146,8 @@ public class Main extends Application {
         GameSubscene startSubscene = new GameSubscene();
         mainPane.getChildren().add(startSubscene);
 
+        EndGame over = new EndGame();
+        mainPane.getChildren().add(over);
 
     }
 
