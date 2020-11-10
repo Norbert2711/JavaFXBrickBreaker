@@ -3,6 +3,7 @@ package BrickBreaker;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -232,10 +233,18 @@ public class Gameplay {
     private void createEndScene() {
         endScene = new GameSubscene();
         gamePane.getChildren().add(endScene);
-        TextLabel endLabel = new TextLabel("U have won this game!" + "\n" + " Congrats!");
-        endLabel.setLayoutX(310);
-        endLabel.setLayoutY(350);
 
+        TextLabel endLabel = new TextLabel("U have won this game!" + "\n" + " Congrats!");
+        endLabel.setLayoutX(110);
+        endLabel.setLayoutY(25);
+        endScene.getPane().getChildren().add(endLabel);
+
+        Button restart = new Button("RESTART");
+        restart.setLayoutX(300);
+        restart.setLayoutY(300);
+        restart.setOnMouseClicked(mouseEvent -> gameStage.close());
+        restart.setOnMouseClicked(mouseEvent -> menuStage.show());
+        endScene.getPane().getChildren().add(restart);
 
     }
 
