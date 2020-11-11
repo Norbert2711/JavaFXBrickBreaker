@@ -251,6 +251,7 @@ public class Gameplay {
     private void showEndScene(GameSubscene gameSubscene) {
         if (hits >= 25) {
             gameTimer.stop();
+            menuStage.close();
             gameSubscene.moveSubscene();
         }
 
